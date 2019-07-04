@@ -13,7 +13,7 @@
         }
 
         .group {
-            background-color: #eee;
+            background-color: #ddd;
             border: 1px solid #ccc;
             padding: 20px;
             margin-bottom: 20px;
@@ -26,6 +26,8 @@
         p {
             max-width: 800px;
         }
+
+        /* end of non-keyboard focus related styles */
 
         /* Reset */
         .accessibleFocusItem {
@@ -58,7 +60,7 @@
         }
 
         :focus>.accessibleFocusItemContent {
-            border: 2px dashed black;
+            border: 2px dashed red;
         }
 
         /* Removing the focus ring styles specifically for button in Firefox */
@@ -83,174 +85,179 @@
 
     <h1>Accessibility keyboard focus fixer</h1>
 
-    <p>Be sure your browser is configured for keyboard browsing to test these features [see: <a href="https://www.456bereastreet.com/archive/200906/enabling_keyboard_navigation_in_mac_os_x_web_browsers/" target="_blank">Enabling keyboard navigation</a> (article specific to MacOS but covers FireFox and Chrome) and <a href="https://www.accessibility-developer-guide.com/knowledge/keyboard-only/browsing-websites/" target="_blank">How to browse websites using a keyboard only</a> ].</p>
+    <p>The purpose of this page is to show that it is possible to have different highlight states for mouse/touchscreen vs keyboard navigation users. This allows site developers to create alternate high contrast and highly visible focus highlights for users using keyboard navigation without impacting the overall site design aesthetic related to link highlighting on hover and active states.</p>
 
-    <p>Note: Clicking / keydown events on the items below will show messaging in the console.log </p>
+    <p>Notes:
+        <ul>
+            <li>Clicking / keydown events on the items below will show messaging in the <em>console.log</em></li>
+            <li>DOM manipulation on this page uses jQuery. It's possible that a vanilla JS version will happen at some point...</li>
+            <li>Be sure your browser is configured for keyboard browsing to test these features [see: <a href="https://www.456bereastreet.com/archive/200906/enabling_keyboard_navigation_in_mac_os_x_web_browsers/" target="_blank">Enabling keyboard navigation</a> (article specific to MacOS but covers FireFox and Chrome) and <a href="https://www.accessibility-developer-guide.com/knowledge/keyboard-only/browsing-websites/" target="_blank">How to browse websites using a keyboard only</a> ].</li>
+        </ul>
 
-    <div id="staticGroup" class="group" role="group">
+        <div id="staticGroup" class="group" role="group">
 
-        <h2>Static version (blueprint)</h2>
+            <h2>Static version (blueprint)</h2>
 
-        <p>This is the format of a linked item including tabindex, role (if needed), and href attributes. Adding the
-            'static' class will keep the script from adding dynamic elements.</p>
+            <p>This is the format of a linked item including tabindex, role (if needed), and href attributes. Adding the
+                'static' class will keep the script from adding dynamic elements.</p>
 
-        <p>Note: 'external' classing on static versions will not generate the title attribute but will enable opening in a new tab/window.</p>
+            <p>Note: 'external' classing on static versions will not generate the title attribute but will enable opening in a new tab/window.</p>
 
-        <button class="accessibleFocusItem static" tabindex="0" type="button" data-href="#button">
-            <span class="accessibleFocusItemContent" tabindex="-1">
-                a button...
+            <button class="accessibleFocusItem static" tabindex="0" type="button" data-href="#button">
+                <span class="accessibleFocusItemContent" tabindex="-1">
+                    a static button...
+                </span>
+            </button>
+
+            <a class="accessibleFocusItem static" href="#link" tabindex="0">
+                <span class="accessibleFocusItemContent" tabindex="-1">
+                    a static link...
+                </span>
+            </a>
+
+            <span class="accessibleFocusItem static" tabindex="0" role="button" data-href="#span">
+                <span class="accessibleFocusItemContent" tabindex="-1">
+                    a static span...
+                </span>
             </span>
-        </button>
 
-        <a class="accessibleFocusItem static" href="#link" tabindex="0">
-            <span class="accessibleFocusItemContent" tabindex="-1">
-                a link...
-            </span>
-        </a>
-
-        <span class="accessibleFocusItem static" tabindex="0" role="button" data-href="#span">
-            <span class="accessibleFocusItemContent" tabindex="-1">
-                a span...
-            </span>
-        </span>
-
-        <div class="accessibleFocusItem static" tabindex="0" role="button" data-href="#div">
-            <div class="accessibleFocusItemContent" tabindex="-1">
-                a div...
+            <div class="accessibleFocusItem static" tabindex="0" role="button" data-href="#div">
+                <div class="accessibleFocusItemContent" tabindex="-1">
+                    a static div...
+                </div>
             </div>
-        </div>
 
-        <p class="accessibleFocusItem static" tabindex="0" role="button" data-href="#p">
-            <span class="accessibleFocusItemContent" tabindex="-1">
-                a p...
+            <p class="accessibleFocusItem static" tabindex="0" role="button" data-href="#p">
+                <span class="accessibleFocusItemContent" tabindex="-1">
+                    a static p...
+                </span>
+            </p>
+        </div>
+        <div id="dynamicGroup" class="group" role="group">
+
+            <h2>Dynamically classed elements</h2>
+
+            <p>Allows the script to add appropriate wrappers to elements by sinply adding the class "accessibleFocusItem" to an element. If the element is not
+                a link tag (a) then the 'data-href' attribute must also be included with the target url. Do not use the 'static' class or the
+                element will not be processed. Use the 'external' class to open in a new tab or window.</p>
+
+            <button class="accessibleFocusItem" type="button" data-href="#button">
+                a dynamic button...
+            </button>
+
+            <a class="accessibleFocusItem" href="#a">
+                a dynamic link...
+            </a>
+
+            <span class="accessibleFocusItem" data-href="#span">
+                a dynamic span...
             </span>
-        </p>
-    </div>
-    <div id="dynamicGroup" class="group" role="group">
 
-        <h2>Dynamically classed elements</h2>
+            <div class="accessibleFocusItem" data-href="#div">
+                a dynamic div...
+            </div>
 
-        <p>Allows the script to add appropriate wrappers to elements by sinply adding the class "accessibleFocusItem" to an element. If the element is not
-            a link tag (a) then the 'data-href' attribute must also be included with the target url. Do not use the 'static' class or the
-            element will not be processed. Use the 'external' class to open in a new tab or window.</p>
-
-        <button class="accessibleFocusItem" type="button" data-href="#button">
-            a dynamic button...
-        </button>
-
-        <a class="accessibleFocusItem external" href="https://apple.com/macos">
-            a dynamic link...
-        </a>
-
-        <span class="accessibleFocusItem" data-href="#span">
-            a dynamic span...
-        </span>
-
-        <div class="accessibleFocusItem" data-href="#div">
-            a dynamic div...
+            <p class="accessibleFocusItem external" data-href="https://apple.com/macos" aria-label="This is a dynamic link on a p tag">
+                a dynamic p with external link...
+            </p>
         </div>
 
-        <p class="accessibleFocusItem external" data-href="https://apple.com/macos" aria-label="This is a dynamic link on a p tag">
-            a dynamic p with external link...
-        </p>
-    </div>
+        <script>
+            $(document).ready(function () {
+                var isKeydownEvent = false;
 
-    <script>
-        $(document).ready(function () {
-            var isKeydownEvent = false;
+                // for console component
+                var interaction;
 
-            // for console component
-            var interaction;
-
-            // Set up dynamic focus fixing structure
-            $('.accessibleFocusItem').not('.static').each(function () {
-                $(this).prop('tabindex', 0);
-                $(this).wrapInner('<span class="accessibleFocusItemContent" tabindex="-1"></span>');
-                if (!$(this).is('button') || !$(this).is('a')) {
-                    $(this).attr('role', 'link');
-                }
-                if (!$(this).is('a')) {
-                    if (!$(this).data('href')) {
-                        console.error('data-href attribute required:', $(this));
+                // Set up dynamic focus fixing structure
+                $('.accessibleFocusItem').not('.static').each(function () {
+                    $(this).prop('tabindex', 0);
+                    $(this).wrapInner('<span class="accessibleFocusItemContent" tabindex="-1"></span>');
+                    if (!$(this).is('button') || !$(this).is('a')) {
+                        $(this).attr('role', 'link');
+                    }
+                    if (!$(this).is('a')) {
+                        if (!$(this).data('href')) {
+                            console.error('data-href attribute required:', $(this));
+                            console.info(
+                                'Without a valid \'data-href\' value this cannot act as a button/link.'
+                            );
+                        }
+                    }
+                    if ($(this).hasClass('external')) {
+                        if ($(this).is('a')) {
+                            $(this).attr('title', 'This will open a new tab or window. ');
+                        } else {
+                            $(this).attr('title', 'This is an external link.\nThis will open a new tab or window\nunless using keyboard navigation. ');
+                        }
+                    }
+                    if (!$(this).attr('aria-label')) {
+                        console.warn('aria-label attribute unavailable:', $(this));
                         console.info(
-                            'Without a valid \'data-href\' value this cannot act as a button/link.'
+                            'If the above accessibleFocusItem label is ambiguous or lacks context \nplease consider adding a descriptive \'aria-label\' attribute.'
                         );
                     }
-                }
-                if ($(this).hasClass('external')) {
-                    if ($(this).is('a')) {
-                        $(this).attr('title', 'This will open a new tab or window. ');
+                })
+                // accessibleFocusItem mouse and keyboard interaction management
+                $('.accessibleFocusItem').on('keydown', function (e) {
+
+                    isKeydownEvent = true; // for console component
+
+                    // do not handle keydown events for links or buttons
+                    if ($(this).is('a') || $(this).is('button')) {
+                        return;
+                    }
+                    // trigger clicks with enter or space keys
+                    if (e.key === 'Enter') {
+                        $(this).trigger('click');
+                    }
+                });
+                $('.accessibleFocusItem').on('click', function (e) {
+                    if (isKeydownEvent) {
+                        if (!$(this).is('a') && $(this).hasClass('external')) {
+                            console.warn('Perhaps this element should be a link instead. \nUsing keyboard navigation with external links may cause navigation to be blocked by the browser:', $(this));
+                        }
+                    }
+
+                    // begin: console component – can be safley removed or altered
+                    if (isKeydownEvent) {
+                        interaction = 'keyboard triggered ';
                     } else {
-                        $(this).attr('title', 'This is an external link.\nThis will open a new tab or window\nunless using keyboard navigation. ');
+                        interaction = 'clicked ';
                     }
-                }
-                if (!$(this).attr('aria-label')) {
-                    console.warn('aria-label attribute unavailable:', $(this));
-                    console.info(
-                        'If the above accessibleFocusItem label is ambiguous or lacks context \nplease consider adding a descriptive \'aria-label\' attribute.'
-                    );
-                }
-            })
-            // accessibleFocusItem mouse and keyboard interaction management
-            $('.accessibleFocusItem').on('keydown', function (e) {
+                    console.log(interaction + $(this).find('.accessibleFocusItemContent').text().trim());
+                    // end: console component
 
-                isKeydownEvent = true; // for console component
-
-                // do not handle keydown events for links or buttons
-                if ($(this).is('a') || $(this).is('button')) {
-                    return;
-                }
-                // trigger clicks with enter or space keys
-                if (e.key === 'Enter') {
-                    $(this).trigger('click');
-                }
-            });
-            $('.accessibleFocusItem').on('click', function (e) {
-                if (isKeydownEvent) {
-                    if (!$(this).is('a') && $(this).hasClass('external')) {
-                        console.warn('Perhaps this element should be a link instead. \nUsing keyboard navigation with external links may cause navigation to be blocked by the browser:', $(this));
-                    }
-                }
-
-                // begin: console component – can be safley removed or altered
-                if (isKeydownEvent) {
-                    interaction = 'keyboard triggered ';
-                } else {
-                    interaction = 'clicked ';
-                }
-                console.log(interaction + $(this).find('.accessibleFocusItemContent').text().trim());
-                // end: console component
-
-                // Handle clicks on non-link accessibleFocusItem using data-href
-                if ($(this).data('href')) {
-                    var link = $(this).data('href');
-                    // Handle External links
-                    if ($(this).hasClass('external') && !isKeydownEvent) {
-                        window.open(link);
-                    } else if ($(this).hasClass('external') && isKeydownEvent) {
-                        var choice = confirm('Do you wish to open a new window? Choosing cancel will open in the same window and may avoid the browser blocking this navigation choice.');
-                        if (choice) {
+                    // Handle clicks on non-link accessibleFocusItem using data-href
+                    if ($(this).data('href')) {
+                        var link = $(this).data('href');
+                        // Handle External links
+                        if ($(this).hasClass('external') && !isKeydownEvent) {
                             window.open(link);
+                        } else if ($(this).hasClass('external') && isKeydownEvent) {
+                            var choice = confirm('Do you wish to open a new window? Choosing cancel will open in the same window and may avoid the browser blocking this navigation choice.');
+                            if (choice) {
+                                window.open(link);
+                            } else {
+                                document.location.href = link;
+                            }
                         } else {
                             document.location.href = link;
                         }
                     } else {
-                        document.location.href = link;
-                    }
-                } else {
-                    if ($(this).is('a')) {
-                        if ($(this).hasClass('external')) {
-                            window.open($(this).attr('href'));
-                        } else {
-                            document.location.href = $(this).attr('href');
+                        if ($(this).is('a')) {
+                            if ($(this).hasClass('external')) {
+                                window.open($(this).attr('href'));
+                            } else {
+                                document.location.href = $(this).attr('href');
+                            }
+                            return false;
                         }
-                        return false;
                     }
-                }
-                isKeydownEvent = false;
+                    isKeydownEvent = false;
+                });
             });
-        });
-    </script>
+        </script>
 </body>
 
 </html>
